@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chatroom</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Welcome to the Chatroom</h1>
+        {%if request.user.is_authenticated%}
+        <p>Hello, {{user.username}}!</p>
+        <ul>
+            {%for message in messages%}
+                <li>{{message.user.username}}:{{message.content}}</li>
+            {%endfor%}
+        </ul>
+        <form method="post" action="{%url 'post_message'%}">
+            {%csrf_token%}
+            <input type="text" name="content" placeholder="Type you message here" required/>
+            <button type="submit">Send</button>
+        </form>
+        <a href="{%url 'logout'%}">Logout</a>
+        {%else%}
+        <p>Please login to access the hcatroom.</p>
+        {%endif%}
+    </body>
+</html>
